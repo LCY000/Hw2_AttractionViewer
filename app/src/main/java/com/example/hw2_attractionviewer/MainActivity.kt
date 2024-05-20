@@ -40,7 +40,8 @@ fun ViewerApp(
     viewModel: ViewerViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
-    MenuScreen(viewModel)
+//    MenuScreen(viewModel)
+    DetailScreen(viewModel)
 }
 
 

@@ -20,4 +20,8 @@ class ViewerViewModel: ViewModel() {
         }
     }
 
+    fun getDataNumber(): Int {
+        return uiState.value.dataNumber
+    }
+
 }
