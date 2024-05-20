@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavHostController
 import com.example.hw2_attractionviewer.data.Place
 import com.example.hw2_attractionviewer.data.places
 import com.example.hw2_attractionviewer.ui.theme.ViewerViewModel
@@ -53,9 +54,11 @@ fun MenuAppBar(
     )
 }
 
+
 @Composable
 fun MenuScreen(
     viewModel: ViewerViewModel,
+    navController: NavHostController,
     modifier: Modifier = Modifier
 ){
     Scaffold(
@@ -64,10 +67,13 @@ fun MenuScreen(
         LazyColumn(contentPadding = paddingValues){
             itemsIndexed(places){ index, place->
                 PlaceCard(
+                    modifier = modifier,
                     place = place,
-                    onClick = {viewModel.setDataNumber(index)},
-                    modifier = modifier.padding(8.dp)
-                    )
+                    onClick = {
+                        viewModel.setDataNumber(index);
+                        navController.navigate("detailPage")
+                        },
+                )
             }
         }
 
@@ -85,18 +91,17 @@ fun PlaceCard(
 ){
     Card(
         shape = RoundedCornerShape(20.dp),
-        modifier= modifier
-            .clickable(
-                onClick = { onClick() },
-//                interactionSource = remember { MutableInteractionSource() },  //按鈕按下去的反饋怪怪的，不是圓角
-//                indication = rememberRipple(bounded = true)
-            ),
+        modifier= Modifier
+            .padding(8.dp)  //每個卡片的間隔
 
     ){
         Row(
-            modifier = modifier
+            modifier = Modifier
+                .clickable(
+                    onClick = { onClick() },
+                )
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(12.dp)
 
         ){
             Image(
@@ -105,20 +110,23 @@ fun PlaceCard(
 //                contentScale = ContentScale.Crop,
                 modifier = modifier
                     .height(70.dp)
-                    .padding(1.dp)
                     .clip(RoundedCornerShape(16.dp))
                 )
 
-            //還沒有景點名稱
-            Text(
-                text = stringResource(place.name),
-                modifier = Modifier
-                    .padding(vertical= 12.dp)
-                    .padding(start = 24.dp)
-                    .fillMaxSize(),
-                textAlign = TextAlign.Start,
-                fontSize = 20.sp
-            )
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .align(Alignment.CenterVertically)
+            ){
+                Text(
+                    text = stringResource(place.name),
+                    modifier = modifier
+                        .padding(start = 28.dp),
+                    textAlign = TextAlign.Start,
+                    fontSize = 20.sp
+                )
+            }
+
         }
     }
 
