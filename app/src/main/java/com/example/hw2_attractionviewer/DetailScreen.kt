@@ -1,5 +1,8 @@
 package com.example.hw2_attractionviewer
 
+// b11109005
+// 2024.5.21完成
+
 import android.content.Intent
 import android.net.Uri
 import androidx.annotation.StringRes
